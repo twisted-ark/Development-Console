@@ -1,0 +1,17 @@
+{
+  "name": "com.twistedark.development-console",
+  "version": "0.0.0",
+  "displayName": "Development Console",
+  "description": "A runtime development options system.",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "dependencies": {
+ },
+ "keywords": [
+  ],
+  "author": {
+    "name": "Bernhard Miettinen",
+    "email": "info@twistedark.com",
+    "url": "https://www.github.com/TwistedArk"
+  } 
+}
