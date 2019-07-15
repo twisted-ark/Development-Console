@@ -5,17 +5,26 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 {
     public sealed class DevelopmentConsole : ScriptableObject
     {
-        private static DevelopmentConsole instance;
-        
-        public static bool IsActive { get; internal set; }
-        
-        private static List<ConsoleTab> tabs = new List<ConsoleTab> (5);
-        
-        [SerializeField]
-        internal int MaxTabWidth = 300;
+        #region Static Values
 
-        public int TabCount => tabs.Count;
+        public static DevelopmentConsole Instance { get; private set; }
+
+        public static bool IsActive { get; internal set; }
+
+        private static List<ConsoleTab> tabs = new List<ConsoleTab> (5);
+
+        #endregion
+
+        [SerializeField] internal int MaxTabWidth = 300;
+
+        [SerializeField] internal bool UseBuiltInGui = true;
+
+        [SerializeField] internal KeyCode ToggleGuiKey = KeyCode.F2;
+
+        [SerializeField] internal float LineHeight = 16;
         
+        public int TabCount => tabs.Count;
+
         public ConsoleTab GetTab (int index)
         {
             return tabs[index];
@@ -25,31 +34,34 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             return GetOrCreateTab (string.Empty);
         }
-        
+
         public static ConsoleTab GetOrCreateTab (string name)
         {
             var tab = tabs.Find (n => n.Name.Equals (name));
-            
+
             if (tab == null)
             {
                 tab = new ConsoleTab (name);
                 tabs.Add (tab);
             }
-            
+
             return tab;
         }
 
-        public static void AddElement (string tabName, GuiElement element)
+        public static void AddElement (string tabName, GuiElementBase elementBase)
         {
             var tab = GetOrCreateTab (tabName);
         }
-        
+
         [RuntimeInitializeOnLoadMethod]
         private static void Initialize ()
         {
-            instance = GetOrCreateScriptableSingleton ();
-            var gui = new GameObject("DevelopmentConsole").AddComponent<DevelopmentConsoleGui> ();
-            gui.console = instance;
+            Instance = GetOrCreateScriptableSingleton ();
+            if (Instance.UseBuiltInGui)
+            {
+                var gui = new GameObject ("DevelopmentConsole").AddComponent<DevelopmentConsoleGui> ();
+                gui.console = Instance;
+            }
         }
 
         private static DevelopmentConsole GetOrCreateScriptableSingleton ()
@@ -76,5 +88,4 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         }
 #endif
     }
-
 }

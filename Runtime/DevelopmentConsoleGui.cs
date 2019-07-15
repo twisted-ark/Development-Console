@@ -12,7 +12,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         private void Update ()
         {
-            if (Input.GetKeyDown (KeyCode.F2))
+            if (Input.GetKeyDown (console.ToggleGuiKey))
                 DevelopmentConsole.IsActive = !DevelopmentConsole.IsActive;
         }
         
@@ -94,7 +94,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             for (var i = 0; i < elementCount; i++)
             {
                 var element = tab.GetGuiElement (i);
-                var height = element.Height;
+                var height = element.GetHeight ();
                 elementRect.height = height;
                 
                 element.Draw (in elementRect);

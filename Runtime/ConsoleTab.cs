@@ -4,34 +4,34 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 {
     public sealed class ConsoleTab
     {
-        private List<GuiElement> elements;
+        private List<GuiElementBase> elements;
 
         public string Name { get; private set; }
 
         public int ElementCount => elements.Count;
 
-        public ConsoleTab (params GuiElement[] elements) : this (string.Empty, elements)
+        public ConsoleTab (params GuiElementBase[] elementsBase) : this (string.Empty, elementsBase)
         {
         }
         
-        public ConsoleTab (string name, params GuiElement[] elements)
+        public ConsoleTab (string name, params GuiElementBase[] elementsBase)
         {
             Name = name;
-            this.elements = new List<GuiElement> (elements);
+            this.elements = new List<GuiElementBase> (elementsBase);
         }
 
-        public GuiElement GetGuiElement (int index)
+        public GuiElementBase GetGuiElement (int index)
         {
             return elements[index];
         }
 
-        public ConsoleTab Add (GuiElement element)
+        public ConsoleTab Add (GuiElementBase elementBase)
         {
-            elements.Add (element);
+            elements.Add (elementBase);
             return this;
         }
 
-        public ConsoleTab AddRange (IEnumerable<GuiElement> elements)
+        public ConsoleTab AddRange (IEnumerable<GuiElementBase> elements)
         {
             this.elements.AddRange (elements);
             return this;
