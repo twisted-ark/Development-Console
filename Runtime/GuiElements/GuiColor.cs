@@ -34,12 +34,9 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             
             PushGuiColor (color);
             // max: #FFFFFF(FF)
-            fieldText = GUI.TextField (contentRect, fieldText, useAlpha ? 9 : 7);
+            fieldText = GUI.TextField (contentRect, fieldText, useAlpha ? 8 : 6);
             PopGuiColor ();
-
-            if (!fieldText.StartsWith ("#"))
-                fieldText = $"#{fieldText}";
-
+            
             lineRect.y += 16;
             if (showSliders)
                 DrawSliders (lineRect);
@@ -47,7 +44,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             if (string.Compare (fieldText, hexColor, StringComparison.Ordinal) == 0)
                 return;
             
-            if (!ColorUtility.TryParseHtmlString (fieldText, out var newColor))
+            if (!ColorUtility.TryParseHtmlString ($"#{fieldText}", out var newColor))
                 return;
 
             color = newColor;
