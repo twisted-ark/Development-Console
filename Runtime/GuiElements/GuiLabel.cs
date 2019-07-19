@@ -14,9 +14,6 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             GUI.Label (rect, Label);
         }
-
-        public override float GetHeight () => 16;
-        
     }
 
 }

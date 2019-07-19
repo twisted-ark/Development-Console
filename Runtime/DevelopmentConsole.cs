@@ -22,6 +22,8 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         [SerializeField] internal KeyCode ToggleGuiKey = KeyCode.F2;
 
         [SerializeField] internal float LineHeight = 16;
+
+        [SerializeField] internal float FontSize = 1.8f;
         
         public int TabCount => tabs.Count;
 
@@ -66,7 +68,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         private static DevelopmentConsole GetOrCreateScriptableSingleton ()
         {
-            var console = Resources.Load<DevelopmentConsole> ("DevelopmentConsole.asset");
+            var console = Resources.Load<DevelopmentConsole> ("DevelopmentConsole");
             if (console == false)
             {
                 console = CreateInstance<DevelopmentConsole> ();

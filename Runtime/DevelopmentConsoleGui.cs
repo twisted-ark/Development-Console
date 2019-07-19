@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
@@ -9,15 +10,17 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         internal DevelopmentConsole console;
         
         private int currentTab;
-
+        
         private void Update ()
         {
             if (Input.GetKeyDown (console.ToggleGuiKey))
                 DevelopmentConsole.IsActive = !DevelopmentConsole.IsActive;
         }
-        
+
         private void OnGUI ()
         {
+            Styles.SetUpStyles ();
+            
             if (!DevelopmentConsole.IsActive)
                 return;
             
@@ -71,11 +74,11 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             if (index == currentTab)
             {
-                GUI.Label (rect, tab.Name);
+                GUI.Label (rect, tab.Name, Styles.labelStyle);
                 return;
             }
             
-            if (GUI.Button (rect, tab.Name))
+            if (GUI.Button (rect, tab.Name, Styles.buttonStyle))
             {
                 currentTab = index;
             }

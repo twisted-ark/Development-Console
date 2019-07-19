@@ -10,6 +10,8 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         private static readonly Stack<Color> colorStack = new Stack<Color> ();
         
         public string Label { get; }
+
+        protected float SingleLineHeight => DevelopmentConsole.Instance.LineHeight;
         
         protected GuiElementBase (string label)
         {
@@ -33,7 +35,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             contentRect.x += labelRect.width;
             contentRect.width -= labelRect.width;
             
-            GUI.Label (labelRect, Label);
+            GUI.Label (labelRect, Label, Styles.labelStyle);
 
             return contentRect;
         }

@@ -29,7 +29,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         public override void Draw (in Rect rect)
         {
-            var lineRect = new Rect (rect.x, rect.y, rect.width, 16);
+            var lineRect = new Rect (rect.x, rect.y, rect.width, SingleLineHeight);
             var contentRect = DrawPrefixLabel (lineRect);
             
             PushGuiColor (color);
@@ -37,7 +37,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             fieldText = GUI.TextField (contentRect, fieldText, useAlpha ? 8 : 6);
             PopGuiColor ();
             
-            lineRect.y += 16;
+            lineRect.y += SingleLineHeight;
             if (showSliders)
                 DrawSliders (lineRect);
             
@@ -58,15 +58,15 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             var newColor = color;
             newColor.r = GUI.HorizontalSlider (lineRect, color.r, 0, 1);
 
-            lineRect.y += 16;
+            lineRect.y += SingleLineHeight;
             newColor.g = GUI.HorizontalSlider (lineRect, color.g, 0, 1);
 
-            lineRect.y += 16;
+            lineRect.y += SingleLineHeight;
             newColor.b = GUI.HorizontalSlider (lineRect, color.b, 0, 1);
-
+            
             if (useAlpha)
             {
-                lineRect.y += 16;
+                lineRect.y += SingleLineHeight;
                 newColor.a = GUI.HorizontalSlider (lineRect, color.a, 0, 1);
             }
 
@@ -80,7 +80,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         
         public override float GetHeight ()
         {
-            return showSliders ? 16 * (useAlpha ? 5 : 4) : 16;
+            return showSliders ? SingleLineHeight * (useAlpha ? 5 : 4) : SingleLineHeight;
         }
 
         public override void Dispose ()
