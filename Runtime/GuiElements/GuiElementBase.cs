@@ -35,7 +35,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             contentRect.x += labelRect.width;
             contentRect.width -= labelRect.width;
             
-            GUI.Label (labelRect, Label, Styles.labelStyle);
+            GUI.Label (labelRect, Label);
 
             return contentRect;
         }

@@ -10,6 +10,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         internal DevelopmentConsole console;
         
         private int currentTab;
+        private GUISkin defaultGuiSkin;
         
         private void Update ()
         {
@@ -19,8 +20,9 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         private void OnGUI ()
         {
-            Styles.SetUpStyles ();
-            
+            defaultGuiSkin = GUI.skin;
+            GUI.skin = console.ConsoleSkin;
+
             if (!DevelopmentConsole.IsActive)
                 return;
             
@@ -37,6 +39,8 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
             DrawHeader (in headerRect);
             DrawOpenTab (in contentRect);
+
+            GUI.skin = defaultGuiSkin;
         }
 
         private void DrawHeader (in Rect rect)
@@ -74,11 +78,11 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             if (index == currentTab)
             {
-                GUI.Label (rect, tab.Name, Styles.labelStyle);
+                GUI.Label (rect, tab.Name);
                 return;
             }
             
-            if (GUI.Button (rect, tab.Name, Styles.buttonStyle))
+            if (GUI.Button (rect, tab.Name))
             {
                 currentTab = index;
             }

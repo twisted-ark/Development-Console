@@ -269,10 +269,10 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 28
     m_FontStyle: 0
     m_Alignment: 0
-    m_WordWrap: 1
+    m_WordWrap: 0
     m_RichText: 1
     m_TextClipping: 1
     m_ImagePosition: 0
@@ -280,7 +280,7 @@ MonoBehaviour:
     m_FixedWidth: 0
     m_FixedHeight: 0
     m_StretchWidth: 1
-    m_StretchHeight: 0
+    m_StretchHeight: 1
   m_textField:
     m_Name: textfield
     m_Normal:
@@ -336,7 +336,7 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 28
     m_FontStyle: 0
     m_Alignment: 0
     m_WordWrap: 0
@@ -537,7 +537,7 @@ MonoBehaviour:
       m_Top: -2
       m_Bottom: -3
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 28
     m_FontStyle: 0
     m_Alignment: 0
     m_WordWrap: 0
@@ -546,7 +546,7 @@ MonoBehaviour:
     m_ImagePosition: 2
     m_ContentOffset: {x: 0, y: 0}
     m_FixedWidth: 0
-    m_FixedHeight: 12
+    m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
   m_horizontalSliderThumb:
@@ -613,9 +613,9 @@ MonoBehaviour:
     m_ImagePosition: 2
     m_ContentOffset: {x: 0, y: 0}
     m_FixedWidth: 0
-    m_FixedHeight: 12
+    m_FixedHeight: 0
     m_StretchWidth: 1
-    m_StretchHeight: 0
+    m_StretchHeight: 1
   m_verticalSlider:
     m_Name: verticalslider
     m_Normal:
