@@ -9,12 +9,29 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         public static DevelopmentConsole Instance { get; private set; }
 
-        public static bool IsActive { get; internal set; }
+        public static event System.Action<bool> VisibilityChanged;
+
+        private static bool isActive;
+
+        public static bool IsActive
+        {
+            get => isActive;
+            set
+            {
+                if (value == isActive)
+                    return;
+                isActive = value;
+                VisibilityChanged?.Invoke (isActive);
+            }
+        }
 
         private static List<ConsoleTab> tabs = new List<ConsoleTab> (5);
 
         #endregion
 
+        [SerializeField] internal GUISkin ConsoleSkin;
+        
+        [Header ("Not Actually adjustable!")]
         [SerializeField] internal int MaxTabWidth = 300;
 
         [SerializeField] internal bool UseBuiltInGui = true;
