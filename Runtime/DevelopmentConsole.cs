@@ -76,11 +76,18 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         private static void Initialize ()
         {
             Instance = GetOrCreateScriptableSingleton ();
+            
             if (Instance.UseBuiltInGui)
             {
-                var gui = new GameObject ("DevelopmentConsole").AddComponent<DevelopmentConsoleGui> ();
-                gui.console = Instance;
+                CreateBuiltInGui ();
             }
+        }
+
+        private static void CreateBuiltInGui ()
+        {
+            var gui = new GameObject ("DevelopmentConsole").AddComponent<DevelopmentConsoleGui> ();
+            gui.console = Instance;
+            DontDestroyOnLoad (gui.gameObject);
         }
 
         private static DevelopmentConsole GetOrCreateScriptableSingleton ()
