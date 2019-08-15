@@ -46,15 +46,14 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         private void DrawHeader (in Rect rect)
         {
             var tabCount = console.TabCount;
-            var tabWidth = math.min (
-                rect.x / math.min (1, tabCount), 
-                console.MaxTabWidth);
-            
+
             var tabRect = new Rect(
-                tabWidth,
+                0,
                 rect.y,
                 rect.width - rect.height,
                 rect.height);
+
+            tabRect.width /= tabCount;
             
             var closeRect = new Rect (
                 rect.width - rect.height,
@@ -66,6 +65,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             {
                 var tab = console.GetTab (i);
                 DrawTabHeader (in tabRect, tab, i);
+                tabRect.x += tabRect.width;
             }
             
             if (GUI.Button (closeRect, "X"))
@@ -78,7 +78,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             if (index == currentTab)
             {
-                GUI.Label (rect, tab.Name);
+                var centeredLabel = GUI.skin.GetStyle ("LabelCentered") ?? GUI.skin.label;
+
+                GUI.Box (rect, GUIContent.none);
+                GUI.Label (rect, tab.Name, centeredLabel);
                 return;
             }
             

@@ -29,19 +29,18 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         #endregion
 
+        [Header ("Skin")]
         [SerializeField] internal GUISkin ConsoleSkin;
         
-        [Header ("Not Actually adjustable!")]
-        [SerializeField] internal int MaxTabWidth = 300;
-
+        [Header ("Controls")]
         [SerializeField] internal bool UseBuiltInGui = true;
-
         [SerializeField] internal KeyCode ToggleGuiKey = KeyCode.F2;
 
+        [Header ("Drawing")]
+        [SerializeField] internal Vector2 anchorsMin;
+        [SerializeField] internal Vector2 anchorsMax;
         [SerializeField] internal float LineHeight = 16;
 
-        [SerializeField] internal float FontSize = 1.8f;
-        
         public int TabCount => tabs.Count;
 
         public ConsoleTab GetTab (int index)
