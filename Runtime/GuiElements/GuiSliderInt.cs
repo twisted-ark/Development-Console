@@ -35,12 +35,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             current = newValue;
             valueChanged?.Invoke ((int) (current + float.Epsilon));
         }
-
-        public override float GetHeight ()
-        {
-            return 16;
-        }
-
+        
         public override void Dispose ()
         {
             valueChanged = null;

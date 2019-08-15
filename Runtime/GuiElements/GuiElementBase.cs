@@ -9,9 +9,14 @@ namespace TwistedArk.DevelopmentConsole.Runtime
     {
         private static readonly Stack<Color> colorStack = new Stack<Color> ();
         
+        protected static float LineHeight => DevelopmentConsole.Instance.LineHeight;
+        protected static float LineHeightPadded => DevelopmentConsole.Instance.LineHeight
+                                                    + DevelopmentConsole.Instance.LinePadding;
+
+        protected static float LinePadding => DevelopmentConsole.Instance.LinePadding;
+        
         public string Label { get; }
 
-        protected float SingleLineHeight => DevelopmentConsole.Instance.LineHeight;
         
         protected GuiElementBase (string label)
         {
@@ -20,7 +25,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         
         public abstract void Draw (in Rect rect);
 
-        public virtual float GetHeight () => DevelopmentConsole.Instance.LineHeight;
+        public virtual float GetHeight () => LineHeightPadded;
 
         public virtual void Dispose () { }
 

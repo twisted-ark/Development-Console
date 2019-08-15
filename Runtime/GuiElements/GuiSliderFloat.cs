@@ -33,11 +33,6 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             }
         }
 
-        public override float GetHeight ()
-        {
-            return 16;
-        }
-
         public override void Dispose ()
         {
             valueChanged = null;

@@ -8,7 +8,8 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         #region Static Values
 
         public static DevelopmentConsole Instance { get; private set; }
-
+        
+        
         public static event System.Action<bool> VisibilityChanged;
 
         private static bool isActive;
@@ -40,7 +41,8 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         [SerializeField] internal Vector2 anchorsMin;
         [SerializeField] internal Vector2 anchorsMax;
         [SerializeField] internal float LineHeight = 16;
-
+        [SerializeField] internal float LinePadding = 2;
+        
         public int TabCount => tabs.Count;
 
         public ConsoleTab GetTab (int index)
