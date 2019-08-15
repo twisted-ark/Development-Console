@@ -38,8 +38,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         [SerializeField] internal KeyCode ToggleGuiKey = KeyCode.F2;
 
         [Header ("Drawing")]
-        [SerializeField] internal Vector2 anchorsMin;
-        [SerializeField] internal Vector2 anchorsMax;
+        [SerializeField] internal Vector2 anchorsMin = Vector2.zero;
+        [SerializeField] internal Vector2 anchorsMax = Vector2.one;
+
+        [SerializeField] internal float HeaderHeight = 60;
         [SerializeField] internal float LineHeight = 16;
         [SerializeField] internal float LinePadding = 2;
         

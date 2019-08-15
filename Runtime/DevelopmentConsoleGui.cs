@@ -26,12 +26,27 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             if (!DevelopmentConsole.IsActive)
                 return;
             
-            var screenWith = Screen.width;
+            var screenWidth = Screen.width;
             var screenHeight = Screen.height;
             
-            var fullRect = new Rect (0, 0, screenWith, screenHeight);
-            var headerRect = new Rect(0, 0, screenWith, 60);
-            var contentRect = new Rect (0, 60, screenWith, screenHeight - 60);
+            var headerHeight = DevelopmentConsole.Instance.HeaderHeight;
+            var anchorsMin = DevelopmentConsole.Instance.anchorsMin;
+            var anchorsMax = DevelopmentConsole.Instance.anchorsMax;
+
+            var startLeft = screenWidth * anchorsMin.x;
+            var startUp = screenHeight * anchorsMin.y;
+
+            var panelWidth = screenWidth * anchorsMax.x - startLeft;
+            var panelHeight = screenHeight * anchorsMax.y - startUp;
+            
+            var fullRect = new Rect (startLeft, startUp, 
+                panelWidth, panelHeight);
+            
+            var headerRect = new Rect(startLeft, startUp, 
+                panelWidth, headerHeight);
+            
+            var contentRect = new Rect (startLeft, startUp + headerHeight, 
+                panelWidth, panelHeight - headerHeight);
             
             GUI.Box (fullRect, GUIContent.none);
             
