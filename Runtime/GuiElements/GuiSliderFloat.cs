@@ -8,7 +8,6 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         private float current;
         private float min;
         private float max;
-
         
         public GuiSliderFloat (string label, Action<float> valueChanged, float start, float min, float max) 
             : base (label, valueChanged)

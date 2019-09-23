@@ -31,10 +31,8 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         protected Rect DrawPrefixLabel (in Rect rect)
         {
-            var labelWidth = rect.width / 3f;
-            
             var labelRect = rect;
-            labelRect.width = math.clamp (labelWidth, 100f, 300f);
+            labelRect.width = math.clamp (rect.width / 3f, 100f, 300f);
 
             var contentRect = rect;
             contentRect.x += labelRect.width;
@@ -65,6 +63,11 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         protected GuiElement (string label, Action<T> valueChanged) : base (label)
         {
             this.valueChanged = valueChanged;
+        }
+
+        public override void Dispose ()
+        {
+            valueChanged = null;
         }
     }
     

@@ -41,9 +41,22 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         [SerializeField] internal Vector2 anchorsMin = Vector2.zero;
         [SerializeField] internal Vector2 anchorsMax = Vector2.one;
 
+        [Space]
+        [SerializeField] internal Vector2 PaddingX = new Vector2 (4, 4);
+        [SerializeField] internal Vector2 PaddingY = new Vector2 (4, 4);
+        
+        [Space]
         [SerializeField] internal float HeaderHeight = 60;
+        [SerializeField] internal float HeaderSpacing = 16;
+        
         [SerializeField] internal float LineHeight = 16;
         [SerializeField] internal float LinePadding = 2;
+
+        [Header ("Color")]
+        [SerializeField] internal Color BackgroundColor = new Color (.1f, .1f, .1f, .7f);
+
+        [SerializeField] internal Color HeaderColorActive = new Color (.8f, .8f, .8f, 1f);
+        [SerializeField] internal Color HeaderColor = new Color (.8f, .8f, .8f, .4f);
         
         public int TabCount => tabs.Count;
 

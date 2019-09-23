@@ -11,6 +11,11 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         private string fieldText;
         private bool useAlpha;
         private bool showSliders;
+
+        private GuiSliderFloat redSlider;
+        private GuiSliderFloat greenSlider;
+        private GuiSliderFloat blueSlider;
+        private GuiSliderFloat alphaSlider;
         
         public GuiColor (string label, Action<Color> valueChanged, Color color, 
             bool useAlpha = false, bool showSliders = false) 
@@ -29,7 +34,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         public override void Draw (in Rect rect)
         {
-            var lineRect = new Rect (rect.x, rect.y, rect.width, LineHeight);
+            var lineRect = new Rect (rect.x, rect.y, rect.width, LineHeightPadded);
             var contentRect = DrawPrefixLabel (lineRect);
             
             PushGuiColor (color);
@@ -39,7 +44,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             
             lineRect.y += LineHeightPadded;
             if (showSliders)
-                DrawSliders (lineRect);
+                DrawChannelSliders (lineRect);
             
             if (string.Compare (fieldText, hexColor, StringComparison.Ordinal) == 0)
                 return;
@@ -47,22 +52,23 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             if (!ColorUtility.TryParseHtmlString ($"#{fieldText}", out var newColor))
                 return;
 
+            var alpha = color.a;
             color = newColor;
+
+            if (!useAlpha)
+                color.a = alpha;
+            
             hexColor = fieldText;
             
             valueChanged?.Invoke (color);
         }
         
-        private void DrawSliders (Rect lineRect)
+        private void DrawChannelSliders (Rect lineRect)
         {
+            lineRect.y += LineHeightPadded;
+                
             var newColor = color;
-            newColor.r = GUI.HorizontalSlider (lineRect, color.r, 0, 1);
-
-            lineRect.y += LineHeightPadded;
-            newColor.g = GUI.HorizontalSlider (lineRect, color.g, 0, 1);
-
-            lineRect.y += LineHeightPadded;
-            newColor.b = GUI.HorizontalSlider (lineRect, color.b, 0, 1);
+            
             
             if (useAlpha)
             {

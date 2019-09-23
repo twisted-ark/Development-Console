@@ -10,7 +10,16 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         
         public override void Draw (in Rect rect)
         {
-            GUI.Label (rect, Label);
+            var LabelRect = rect;
+            LabelRect.height /= 2f;
+            LabelRect.y += LabelRect.height;
+            
+            GUI.Label (LabelRect, Label);
+        }
+
+        public override float GetHeight ()
+        {
+            return base.GetHeight () * 2f;
         }
     }
 
