@@ -7,8 +7,6 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 {
     public abstract class GuiElementBase : IDisposable
     {
-        private static readonly Stack<Color> colorStack = new Stack<Color> ();
-        
         protected static float LineHeight => DevelopmentConsole.Instance.LineHeight;
         protected static float LineHeightPadded => DevelopmentConsole.Instance.LineHeight
                                                     + DevelopmentConsole.Instance.LinePadding;
@@ -22,8 +20,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             Label = label;
         }
-        
+
         public abstract void Draw (in Rect rect);
+
+        protected abstract void OnDraw (in Rect rect);
 
         public virtual float GetHeight () => LineHeightPadded;
 
@@ -42,32 +42,41 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
             return contentRect;
         }
-        
-        protected static void PushGuiColor (in Color color)
-        {
-            colorStack.Push (GUI.color);
-            GUI.color = color;
-        }
-
-        protected static void PopGuiColor ()
-        {
-            if (colorStack.Count > 0)
-                GUI.color = colorStack.Pop ();
-        }
     }
 
     public abstract class GuiElement<T> : GuiElementBase
     {
         protected Action<T> valueChanged;
+        protected Func<T> updateValue;
         
-        protected GuiElement (string label, Action<T> valueChanged) : base (label)
+        protected T currentValue;
+        
+        protected GuiElement (string label, Action<T> valueChanged, Func<T> updateValue) : base (label)
         {
             this.valueChanged = valueChanged;
+            this.updateValue = updateValue;
+
+            UpdateValue (ref currentValue);
         }
 
         public override void Dispose ()
         {
             valueChanged = null;
+            updateValue = null;
+        }
+
+        public override void Draw (in Rect rect)
+        {
+            UpdateValue (ref currentValue);
+            OnDraw (in rect);
+        }
+
+        protected void UpdateValue (ref T value)
+        {
+            if (updateValue == null)
+                return;
+
+            value = updateValue.Invoke ();
         }
     }
     

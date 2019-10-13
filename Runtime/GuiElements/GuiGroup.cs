@@ -25,8 +25,12 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             return ConstructGroup (tab, label, elementsBase);
         }
 
-        
         public override void Draw (in Rect rect)
+        {
+            OnDraw (in rect);
+        }
+
+        protected override void OnDraw (in Rect rect)
         {
             var elementRect = rect;
             foreach (var element in elements)

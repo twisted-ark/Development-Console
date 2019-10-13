@@ -2,13 +2,18 @@
 
 namespace TwistedArk.DevelopmentConsole.Runtime
 {
-    public class GuiLabel : GuiElementBase
+    public class LabelField : GuiElementBase
     {
-        public GuiLabel (string label) : base (label)
+        public LabelField (string label) : base (label)
         {
         }
-        
+
         public override void Draw (in Rect rect)
+        {
+            OnDraw (in rect);
+        }
+
+        protected override void OnDraw (in Rect rect)
         {
             var LabelRect = rect;
             LabelRect.height /= 2f;

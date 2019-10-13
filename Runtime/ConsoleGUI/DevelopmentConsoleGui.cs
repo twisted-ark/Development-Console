@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
 {
     [AddComponentMenu (null)]
-    public class DevelopmentConsoleGui : MonoBehaviour
+    public partial class DevelopmentConsoleGui : MonoBehaviour
     {
         internal DevelopmentConsole console;
         
@@ -27,7 +26,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             defaultGuiSkin = GUI.skin;
             GUI.skin = console.ConsoleSkin;
 
-            PushBackgroundColor (DevelopmentConsole.Instance.BackgroundColor);
+            GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.BackgroundColor);
 
             var screenWidth = Screen.width;
             var screenHeight = Screen.height;
@@ -71,56 +70,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             DrawHeader (in headerRect);
             DrawOpenTab (in contentRect);
 
-            PopBackgroundColor ();
-        }
-
-        private void DrawHeader (in Rect rect)
-        {
-            var tabCount = console.TabCount;
-
-            var closeRect = new Rect (
-                rect.x + rect.width - rect.height,
-                rect.y,
-                rect.height,
-                rect.height);
+            GuiColors.PopBackgroundColor ();
+            GUI.skin = defaultGuiSkin;
             
-            var tabRect = rect;
-            tabRect.width -= closeRect.width;
-
-            tabRect.width /= tabCount;
-
-            for (var i = 0; i < tabCount; i++)
-            {
-                var tab = console.GetTab (i);
-                DrawHeaderTab (in tabRect, tab, i);
-                tabRect.x += tabRect.width;
-            }
-            
-            if (GUI.Button (closeRect, "X"))
-            {
-                DevelopmentConsole.IsActive = false;
-            }
-        }
-
-        private void DrawHeaderTab (in Rect rect, ConsoleTab tab, int index)
-        {
-            if (index == currentTab)
-            {
-                PushBackgroundColor (DevelopmentConsole.Instance.HeaderColorActive);
-                var centeredLabel = GUI.skin.GetStyle ("LabelCentered") ?? GUI.skin.label;
-
-                GUI.Box (rect, GUIContent.none);
-                GUI.Label (rect, tab.Name, centeredLabel);
-                PopBackgroundColor ();
-                return;
-            }
-            
-            PushBackgroundColor (DevelopmentConsole.Instance.HeaderColor);
-            if (GUI.Button (rect, tab.Name))
-            {
-                currentTab = index;
-            }
-            PopBackgroundColor ();
+            Event.current.Use ();
         }
 
         private void DrawOpenTab (in Rect rect)
@@ -143,22 +96,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 elementRect.y += height;
             }
         }
-
-        private Stack<Color> backgroundColorStack = new Stack<Color> ();
         
-        private void PushBackgroundColor (in Color color)
-        {
-            backgroundColorStack.Push (GUI.backgroundColor);
-            GUI.backgroundColor = color;
-        }
-
-        private void PopBackgroundColor ()
-        {
-            if (backgroundColorStack.Count == 0)
-                return;
-            
-            GUI.backgroundColor = backgroundColorStack.Pop ();
-        }
     }
 
 }

@@ -3,44 +3,47 @@ using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
 {
-    public class GuiColor : GuiElement<Color>
+    public class ColorField : GuiElement<Color>
     {
-        private Color color;
         private string hexColor;
 
         private string fieldText;
         private bool useAlpha;
         private bool showSliders;
 
-        private GuiSliderFloat redSlider;
-        private GuiSliderFloat greenSlider;
-        private GuiSliderFloat blueSlider;
-        private GuiSliderFloat alphaSlider;
+        private SliderFloat redSlider;
+        private SliderFloat greenSlider;
+        private SliderFloat blueSlider;
+        private SliderFloat alphaSlider;
         
-        public GuiColor (string label, Action<Color> valueChanged, Color color, 
+        public ColorField (string label, Action<Color> valueChanged, Func<Color> updateColor, 
             bool useAlpha = false, bool showSliders = false) 
-        : base (label, valueChanged)
+        : base (label, valueChanged, updateColor)
         {
+            var color = updateColor.Invoke ();
+            
             if (!useAlpha)
                 color.a = 1;
             
             this.useAlpha = useAlpha;
             this.showSliders = showSliders;
             
-            this.color = color;
             hexColor = $"{ColorUtility.ToHtmlStringRGBA (color)}";
             fieldText = hexColor;
         }
 
-        public override void Draw (in Rect rect)
+
+        protected override void OnDraw (in Rect rect)
         {
             var lineRect = new Rect (rect.x, rect.y, rect.width, LineHeightPadded);
             var contentRect = DrawPrefixLabel (lineRect);
             
-            PushGuiColor (color);
+            UpdateValue (ref currentValue);
+            
+            GuiColors.PushGuiColor (currentValue);
             // max: #FFFFFF(FF)
             fieldText = GUI.TextField (contentRect, fieldText, useAlpha ? 8 : 6);
-            PopGuiColor ();
+            GuiColors.PopGuiColor ();
             
             lineRect.y += LineHeightPadded;
             if (showSliders)
@@ -52,34 +55,34 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             if (!ColorUtility.TryParseHtmlString ($"#{fieldText}", out var newColor))
                 return;
 
-            var alpha = color.a;
-            color = newColor;
+            var alpha = currentValue.a;
+            currentValue = newColor;
 
             if (!useAlpha)
-                color.a = alpha;
+                currentValue.a = alpha;
             
             hexColor = fieldText;
             
-            valueChanged?.Invoke (color);
+            valueChanged?.Invoke (currentValue);
         }
         
         private void DrawChannelSliders (Rect lineRect)
         {
             lineRect.y += LineHeightPadded;
                 
-            var newColor = color;
+            var newColor = currentValue;
             
             
             if (useAlpha)
             {
                 lineRect.y += LineHeightPadded;
-                newColor.a = GUI.HorizontalSlider (lineRect, color.a, 0, 1);
+                newColor.a = GUI.HorizontalSlider (lineRect, currentValue.a, 0, 1);
             }
 
-            if (color != newColor)
+            if (currentValue != newColor)
             {
-                color = newColor;
-                fieldText = ColorUtility.ToHtmlStringRGBA (color);
+                currentValue = newColor;
+                fieldText = ColorUtility.ToHtmlStringRGBA (currentValue);
                 hexColor = fieldText;
             }
         }

@@ -3,20 +3,17 @@ using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
 {
-    public class GuiToggle : GuiElement<bool>
+    public class Toggle : GuiElement<bool>
     {
-        private bool currentValue;
-        
-        public GuiToggle (string label, bool startValue, Action<bool> valueChanged) : 
-            base (label, valueChanged)
+        public Toggle (string label, Action<bool> valueChanged, Func<bool> updateValue)
+            : base (label, valueChanged, updateValue)
         {
-            currentValue = startValue;
         }
 
-        public override void Draw (in Rect rect)
+        protected override void OnDraw (in Rect rect)
         {
             var contentRect = DrawPrefixLabel (rect);
-            
+
             var oldValue = currentValue;
             currentValue = GUI.Toggle (contentRect, currentValue, GUIContent.none);
 
@@ -26,5 +23,4 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             }
         }
     }
-
 }
