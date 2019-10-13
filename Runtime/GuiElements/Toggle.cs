@@ -9,6 +9,11 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             : base (label, valueChanged, updateValue)
         {
         }
+        
+        public Toggle (string label, bool startValue, Action<bool> valueChanged)
+            : base (label, startValue, valueChanged)
+        {
+        }
 
         protected override void OnDraw (in Rect rect)
         {

@@ -59,6 +59,12 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             UpdateValue (ref currentValue);
         }
 
+        protected GuiElement (string label, T startValue, Action<T> valueChanged) : base (label)
+        {
+            this.valueChanged = valueChanged;
+            this.currentValue = startValue;
+        }
+
         public override void Dispose ()
         {
             valueChanged = null;

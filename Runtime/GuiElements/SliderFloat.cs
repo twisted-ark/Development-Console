@@ -13,8 +13,13 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             this.min = min;
             this.max = max;
-
-            this.valueChanged = valueChanged;
+        }
+        
+        public SliderFloat (string label, float min, float max, float start, Action<float> valueChanged) 
+            : base (label, start, valueChanged)
+        {
+            this.min = min;
+            this.max = max;
         }
 
         protected override void OnDraw (in Rect rect)
