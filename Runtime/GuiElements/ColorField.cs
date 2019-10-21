@@ -33,7 +33,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         }
 
 
-        protected override void OnDraw (in Rect rect)
+        public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
             var lineRect = new Rect (rect.x, rect.y, rect.width, LineHeightPadded);
             var contentRect = DrawPrefixLabel (lineRect);

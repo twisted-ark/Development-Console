@@ -7,30 +7,38 @@ namespace TwistedArk.DevelopmentConsole.Runtime
     {
         private List<GuiElementBase> elements;
 
-        public GuiGroup (string label, params GuiElementBase[] elementsBase) : base (label)
+        public GuiGroup (string label, params GuiElementBase[] elements) : base (label)
         {
-            this.elements = new List<GuiElementBase> (elementsBase);
+            this.elements = new List<GuiElementBase> (elements);
         }
 
-        public static GuiGroup ConstructGroup (ConsoleTab tab, string label, params GuiElementBase[] elementsBase)
+        public static GuiGroup ConstructGroup (ConsoleTab tab, string label, params GuiElementBase[] elements)
         {
-            var group = new GuiGroup (label, elementsBase);
+            var group = new GuiGroup (label, elements);
             tab.Add (group);
             return group;
         }
         
-        public static GuiGroup ConstructGroup (ConsoleTab tab, Component component, params GuiElementBase[] elementsBase)
+        public static GuiGroup ConstructGroup (string tabName, string label, params GuiElementBase[] elements)
+        {
+            var tab = DevelopmentConsole.GetOrCreateTab (tabName);
+            return ConstructGroup (tab, label, elements);
+        }
+        
+        public static GuiGroup ConstructGroup (ConsoleTab tab, Component component, params GuiElementBase[] elements)
         {
             var label = $"{component.name}({component.GetInstanceID ().ToString ()})";
-            return ConstructGroup (tab, label, elementsBase);
+            return ConstructGroup (tab, label, elements);
         }
-
-        public override void Draw (in Rect rect)
+        
+        public static GuiGroup ConstructGroup (string tabName, Component component, params GuiElementBase[] elements)
         {
-            OnDraw (in rect);
+            var tab = DevelopmentConsole.GetOrCreateTab (tabName);
+            var label = $"{component.name}({component.GetInstanceID ().ToString ()})";
+            return ConstructGroup (tab, label, elements);
         }
 
-        protected override void OnDraw (in Rect rect)
+        public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
             var elementRect = rect;
             foreach (var element in elements)
@@ -38,7 +46,8 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 var height = element.GetHeight () * 3;
                 elementRect.height = height;
                 
-                element.Draw (elementRect);
+                element.OnPreDraw (elementRect, skin);
+                element.OnDraw (elementRect, skin);
                 elementRect.y += height;
             }
         }

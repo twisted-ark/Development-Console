@@ -23,7 +23,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             this.max = max;
         }
 
-        protected override void OnDraw (in Rect rect)
+        public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
             var contentRect = DrawPrefixLabel (rect);
             var oldValue = CurrentValue;

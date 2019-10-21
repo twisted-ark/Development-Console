@@ -29,7 +29,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             this.snap = snap < 0.01f ? 0.01f : snap;
         }
     
-        protected override void OnDraw (in Rect rect)
+        public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
             var lineRect = rect;
             lineRect.height = LineHeight;

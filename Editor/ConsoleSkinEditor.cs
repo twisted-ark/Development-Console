@@ -31,6 +31,8 @@ namespace TwistedArk.Develpomentconsole.Editor
             {
                 using (new GUILayout.VerticalScope (GUI.skin.box))
                 {
+                    //DrawSnapshotting ();
+                    //EditorGUILayout.Space ();
                     DrawFontSizeAdjust ();
                 }
             }
@@ -56,18 +58,48 @@ namespace TwistedArk.Develpomentconsole.Editor
             serializedObject.ApplyModifiedProperties ();
         }
 
+        private void DrawSnapshotting ()
+        {
+            using (new GUILayout.HorizontalScope ())
+            {
+                if (GUILayout.Button ("Save Snapshot"))
+                {
+                    var json = JsonUtility.ToJson (target);
+                    EditorPrefs.SetString (target.name, json);
+                    
+                    Debug.Log ($"Saved snapshot. {json}");
+                }
+
+                if (GUILayout.Button ("Restore Snapshot"))
+                {
+                    var json = EditorPrefs.GetString (name, null);
+                    if (json == null)
+                    {
+                        Debug.Log ("Failed to restore snapshot.");
+                        return;
+                    }
+                    
+                    JsonUtility.FromJsonOverwrite (json, target);
+                    serializedObject.Update ();
+
+                    Debug.Log ("Restored snapshot.");
+                }
+            }
+        }
+
         private void DrawFontSizeAdjust ()
         {
-            fontScaleFactor = EditorGUILayout.Slider ("Font Scale Factor", fontScaleFactor, 0.01f, 1f);
             
             using (new GUILayout.HorizontalScope ())
             {
-                if (GUILayout.Button ("+"))
+                fontScaleFactor = EditorGUILayout.Slider ("Font Scale Factor", fontScaleFactor, 0.01f, 1f);
+
+                if (GUILayout.Button ("+", GUILayout.Width (40)))
                 {
                     ScaleFontSizes (1 + fontScaleFactor);
                 }
             
-                if (GUILayout.Button ("-"))
+                if (GUILayout.Button ("-", GUILayout.Width (40)))
                 {
                     ScaleFontSizes (1 - fontScaleFactor);
                 }

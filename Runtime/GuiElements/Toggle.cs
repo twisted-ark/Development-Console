@@ -15,10 +15,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
         }
 
-        protected override void OnDraw (in Rect rect)
+        public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
             var contentRect = DrawPrefixLabel (rect);
-            CurrentValue = GUI.Toggle (contentRect, CurrentValue, GUIContent.none);
+            CurrentValue = GUI.Toggle (contentRect, CurrentValue, GUIContent.none, skin.GetOrCreateStyle ("Toggle", GUI.skin.toggle));
         }
     }
 }

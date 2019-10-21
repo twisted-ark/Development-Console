@@ -8,18 +8,13 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
         }
 
-        public override void Draw (in Rect rect)
+        public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
-            OnDraw (in rect);
-        }
-
-        protected override void OnDraw (in Rect rect)
-        {
-            var LabelRect = rect;
-            LabelRect.height /= 2f;
-            LabelRect.y += LabelRect.height;
+            var labelRect = rect;
+            labelRect.height /= 2f;
+            labelRect.y += labelRect.height;
             
-            GUI.Label (LabelRect, Label);
+            GUI.Label (labelRect, Label, skin.GetOrCreateStyle ("Label", GUI.skin.label));
         }
 
         public override float GetHeight ()

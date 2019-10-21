@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
@@ -10,10 +9,15 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         [Header ("Styles")] 
         [SerializeField] internal List<GUIStyle> Styles;
 
-        private Dictionary<string, GUIStyle> styleMap = new Dictionary<string, GUIStyle> ();
+        private Dictionary<string, GUIStyle> styleMap;
 
         public GUIStyle GetOrCreateStyle (string styleName, GUIStyle template)
         {
+            if (styleMap == null)
+            {
+                ConstructStyleMap ();
+            }
+            
             if (styleMap.TryGetValue (styleName, out var style))
                 return style;
             
@@ -25,6 +29,16 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             return newStyle;
         }
 
+        private void ConstructStyleMap ()
+        {
+            styleMap = new Dictionary<string, GUIStyle> ();
+            
+            foreach (var style in Styles)
+            {
+                styleMap.Add (style.name, style);
+            }
+        }
+        
         private void Reset ()
         {
             Styles = new List<GUIStyle>

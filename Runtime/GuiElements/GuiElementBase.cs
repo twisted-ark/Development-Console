@@ -23,9 +23,9 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             DrawOrder = drawOrder;
         }
 
-        public abstract void Draw (in Rect rect);
+        public virtual void OnPreDraw (in Rect rect, ConsoleSkin skin) { }
 
-        protected abstract void OnDraw (in Rect rect);
+        public virtual void OnDraw (in Rect rect, ConsoleSkin skin) { }
 
         public virtual float GetHeight () => LineHeightPadded;
 
@@ -88,10 +88,9 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             updateValue = null;
         }
 
-        public override void Draw (in Rect rect)
+        public override void OnPreDraw (in Rect rect, ConsoleSkin skin)
         {
             UpdateValue (ref currentValue);
-            OnDraw (in rect);
         }
 
         protected void UpdateValue (ref T value)

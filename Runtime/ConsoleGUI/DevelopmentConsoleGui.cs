@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
@@ -10,7 +9,6 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         internal DevelopmentConsole console;
         
         private int currentTab;
-        private GUISkin defaultGuiSkin;
         
         private void Update ()
         {
@@ -22,10 +20,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             if (!DevelopmentConsole.IsActive)
                 return;
-
-            defaultGuiSkin = GUI.skin;
-            GUI.skin = console.UnityGuiSkin;
-
+            
             GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.BackgroundColor);
 
             var screenWidth = Screen.width;
@@ -63,40 +58,22 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 panelHeight - contentOffset - totalPaddingY);
 
 
-            GUI.Box (fullRect, GUIContent.none);
+            var skin = DevelopmentConsole.Instance.Skin;
+            var unitySkin = DevelopmentConsole.Instance.UnityGuiSkin;
+            
+            GUI.Box (fullRect, GUIContent.none, skin.GetOrCreateStyle ("Box", unitySkin.box));
             
             currentTab = math.min (currentTab, DevelopmentConsole.TabCount);
 
-            DrawHeader (in headerRect);
-            DrawOpenTab (in contentRect);
+            DrawHeader (in headerRect, skin);
+            DrawOpenTab (in contentRect, skin);
 
             GuiColors.PopBackgroundColor ();
-            GUI.skin = defaultGuiSkin;
             
-            Event.current.Use ();
+            if (Event.current.type != EventType.Repaint && Event.current.type != EventType.Layout)
+                Event.current.Use ();
         }
 
-        private void DrawOpenTab (in Rect rect)
-        {
-            if (currentTab == DevelopmentConsole.TabCount)
-                return;
-            
-            var elementRect = rect;
-
-            var tab = DevelopmentConsole.GetTab (currentTab);
-            var elementCount = tab.ElementCount;
-            
-            for (var i = 0; i < elementCount; i++)
-            {
-                var element = tab.GetGuiElement (i);
-                var height = element.GetHeight ();
-                
-                elementRect.height = height;
-                element.Draw (in elementRect);
-                elementRect.y += height;
-            }
-        }
-        
     }
 
 }
