@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
@@ -8,37 +9,34 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         private float min;
         private float max;
         
-        public SliderFloat (string label, float min, float max, Action<float> valueChanged, Func<float> updateValue) 
+        private float snap;
+        private float value;
+        
+        public SliderFloat (string label, float min, float max, float snap, Action<float> valueChanged, Func<float> updateValue) 
             : base (label, valueChanged, updateValue)
         {
             this.min = min;
             this.max = max;
+            this.snap = snap < 0.01f ? 0.01f : snap;
         }
         
-        public SliderFloat (string label, float min, float max, float start, Action<float> valueChanged) 
+        public SliderFloat (string label, float min, float max, float start, float snap,  Action<float> valueChanged) 
             : base (label, start, valueChanged)
         {
             this.min = min;
             this.max = max;
+            this.snap = snap < 0.01f ? 0.01f : snap;
         }
 
         protected override void OnDraw (in Rect rect)
         {
             var contentRect = DrawPrefixLabel (rect);
+            var displayValue = Mathf.Round (value / snap) * snap;
             
-            var oldValue = currentValue;
-            currentValue = GUI.HorizontalSlider (contentRect, currentValue, min, max);
-
-            if (currentValue != oldValue)
-            {
-                valueChanged?.Invoke (currentValue);
-            }
+            value = GUI.HorizontalSlider (contentRect, displayValue, min, max);
+            CurrentValue = Mathf.Round (value / snap) * snap;
         }
-
-        public override void Dispose ()
-        {
-            valueChanged = null;
-        }
+        
     }
 
 }

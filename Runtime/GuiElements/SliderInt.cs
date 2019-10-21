@@ -26,7 +26,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         protected override void OnDraw (in Rect rect)
         {
             var contentRect = DrawPrefixLabel (rect);
-            var oldValue = currentValue;
+            var oldValue = CurrentValue;
             
             var newValue = GUI.HorizontalSlider (contentRect, oldValue, min, max);
             newValue = math.round (newValue);
@@ -34,8 +34,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             if ((int) newValue == oldValue) 
                 return;
             
-            currentValue = (int) newValue;
-            valueChanged?.Invoke ((int) (currentValue + float.Epsilon));
+            CurrentValue = (int) newValue;
         }
     }
 

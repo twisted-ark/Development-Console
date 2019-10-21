@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
 {
@@ -8,7 +9,6 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         #region Static Values
 
         public static DevelopmentConsole Instance { get; private set; }
-        
         
         public static event System.Action<bool> VisibilityChanged;
 
@@ -30,8 +30,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         #endregion
 
+        [FormerlySerializedAs ("ConsoleSkin")]
         [Header ("Skin")]
-        [SerializeField] internal GUISkin ConsoleSkin;
+        [SerializeField] internal GUISkin UnityGuiSkin;
+        [SerializeField] internal ConsoleSkin Skin;
         
         [Header ("Controls")]
         [SerializeField] internal bool UseBuiltInGui = true;
@@ -58,9 +60,9 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         [SerializeField] internal Color HeaderColorActive = new Color (.8f, .8f, .8f, 1f);
         [SerializeField] internal Color HeaderColor = new Color (.8f, .8f, .8f, .4f);
         
-        public int TabCount => tabs.Count;
+        public static int TabCount => tabs.Count;
 
-        public ConsoleTab GetTab (int index)
+        public static ConsoleTab GetTab (int index)
         {
             return tabs[index];
         }
@@ -73,19 +75,21 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         public static ConsoleTab GetOrCreateTab (string name)
         {
             var tab = tabs.Find (n => n.Name.Equals (name));
-
-            if (tab == null)
-            {
-                tab = new ConsoleTab (name);
-                tabs.Add (tab);
-            }
-
-            return tab;
+            return tab ?? CreateTab (name);
         }
 
-        public static void AddElement (string tabName, GuiElementBase elementBase)
+        public static void AddElementToTab (string tabName, GuiElementBase elementBase)
         {
             var tab = GetOrCreateTab (tabName);
+            tab.Add (elementBase);
+        }
+
+        private static ConsoleTab CreateTab (string name)
+        {
+            var tab = new ConsoleTab (name);
+            tabs.Add (tab);
+
+            return tab;
         }
 
         [RuntimeInitializeOnLoadMethod]

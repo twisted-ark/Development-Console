@@ -38,9 +38,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             var lineRect = new Rect (rect.x, rect.y, rect.width, LineHeightPadded);
             var contentRect = DrawPrefixLabel (lineRect);
             
-            UpdateValue (ref currentValue);
-            
-            GuiColors.PushGuiColor (currentValue);
+            GuiColors.PushGuiColor (CurrentValue);
             // max: #FFFFFF(FF)
             fieldText = GUI.TextField (contentRect, fieldText, useAlpha ? 8 : 6);
             GuiColors.PopGuiColor ();
@@ -55,34 +53,30 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             if (!ColorUtility.TryParseHtmlString ($"#{fieldText}", out var newColor))
                 return;
 
-            var alpha = currentValue.a;
-            currentValue = newColor;
-
             if (!useAlpha)
-                currentValue.a = alpha;
+                newColor.a = CurrentValue.a;
             
             hexColor = fieldText;
-            
-            valueChanged?.Invoke (currentValue);
+            CurrentValue = newColor;
         }
         
         private void DrawChannelSliders (Rect lineRect)
         {
             lineRect.y += LineHeightPadded;
                 
-            var newColor = currentValue;
+            var newColor = CurrentValue;
             
             
             if (useAlpha)
             {
                 lineRect.y += LineHeightPadded;
-                newColor.a = GUI.HorizontalSlider (lineRect, currentValue.a, 0, 1);
+                newColor.a = GUI.HorizontalSlider (lineRect, CurrentValue.a, 0, 1);
             }
 
-            if (currentValue != newColor)
+            if (CurrentValue != newColor)
             {
-                currentValue = newColor;
-                fieldText = ColorUtility.ToHtmlStringRGBA (currentValue);
+                CurrentValue = newColor;
+                fieldText = ColorUtility.ToHtmlStringRGBA (CurrentValue);
                 hexColor = fieldText;
             }
         }

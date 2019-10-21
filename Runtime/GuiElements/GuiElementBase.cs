@@ -8,17 +8,19 @@ namespace TwistedArk.DevelopmentConsole.Runtime
     public abstract class GuiElementBase : IDisposable
     {
         protected static float LineHeight => DevelopmentConsole.Instance.LineHeight;
+
         protected static float LineHeightPadded => DevelopmentConsole.Instance.LineHeight
-                                                    + DevelopmentConsole.Instance.LinePadding;
+                                                   + DevelopmentConsole.Instance.LinePadding;
 
         protected static float LinePadding => DevelopmentConsole.Instance.LinePadding;
-        
-        public string Label { get; }
 
-        
-        protected GuiElementBase (string label)
+        public string Label { get; private set; }
+        public int DrawOrder { get; private set; }
+
+        protected GuiElementBase (string label, int drawOrder = 0)
         {
             Label = label;
+            DrawOrder = drawOrder;
         }
 
         public abstract void Draw (in Rect rect);
@@ -27,7 +29,9 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         public virtual float GetHeight () => LineHeightPadded;
 
-        public virtual void Dispose () { }
+        public virtual void Dispose ()
+        {
+        }
 
         protected Rect DrawPrefixLabel (in Rect rect)
         {
@@ -37,23 +41,36 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             var contentRect = rect;
             contentRect.x += labelRect.width;
             contentRect.width -= labelRect.width;
-            
+
             GUI.Label (labelRect, Label);
 
             return contentRect;
         }
     }
 
-    public abstract class GuiElement<T> : GuiElementBase
+    public abstract class GuiElement<T> : GuiElementBase where T : IEquatable<T>
     {
-        protected Action<T> valueChanged;
+        public event Action<T> ValueChanged;
         protected Func<T> updateValue;
-        
-        protected T currentValue;
-        
+
+        private T currentValue;
+
+        internal T CurrentValue
+        {
+            get => currentValue;
+            set
+            {
+                if (currentValue.Equals (value))
+                    return;
+                
+                currentValue = value;
+                ValueChanged?.Invoke (currentValue);
+            }
+        }
+
         protected GuiElement (string label, Action<T> valueChanged, Func<T> updateValue) : base (label)
         {
-            this.valueChanged = valueChanged;
+            ValueChanged = valueChanged;
             this.updateValue = updateValue;
 
             UpdateValue (ref currentValue);
@@ -61,13 +78,13 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         protected GuiElement (string label, T startValue, Action<T> valueChanged) : base (label)
         {
-            this.valueChanged = valueChanged;
+            ValueChanged = valueChanged;
             this.currentValue = startValue;
         }
 
         public override void Dispose ()
         {
-            valueChanged = null;
+            ValueChanged = null;
             updateValue = null;
         }
 
@@ -85,5 +102,4 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             value = updateValue.Invoke ();
         }
     }
-    
 }

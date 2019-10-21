@@ -18,14 +18,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         protected override void OnDraw (in Rect rect)
         {
             var contentRect = DrawPrefixLabel (rect);
-
-            var oldValue = currentValue;
-            currentValue = GUI.Toggle (contentRect, currentValue, GUIContent.none);
-
-            if (currentValue != oldValue)
-            {
-                valueChanged?.Invoke (currentValue);
-            }
+            CurrentValue = GUI.Toggle (contentRect, CurrentValue, GUIContent.none);
         }
     }
 }

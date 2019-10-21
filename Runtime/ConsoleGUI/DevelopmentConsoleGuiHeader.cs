@@ -6,7 +6,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
     {
         private void DrawHeader (in Rect rect)
         {
-            var tabCount = console.TabCount;
+            var tabCount = DevelopmentConsole.TabCount;
 
             var closeRect = new Rect (
                 rect.x + rect.width - rect.height,
@@ -21,7 +21,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
             for (var i = 0; i < tabCount; i++)
             {
-                var tab = console.GetTab (i);
+                var tab = DevelopmentConsole.GetTab (i);
                 DrawHeaderTab (in tabRect, tab, i);
                 tabRect.x += tabRect.width;
             }

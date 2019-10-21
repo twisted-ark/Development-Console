@@ -24,7 +24,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 return;
 
             defaultGuiSkin = GUI.skin;
-            GUI.skin = console.ConsoleSkin;
+            GUI.skin = console.UnityGuiSkin;
 
             GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.BackgroundColor);
 
@@ -65,7 +65,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
             GUI.Box (fullRect, GUIContent.none);
             
-            currentTab = math.min (currentTab, console.TabCount);
+            currentTab = math.min (currentTab, DevelopmentConsole.TabCount);
 
             DrawHeader (in headerRect);
             DrawOpenTab (in contentRect);
@@ -78,12 +78,12 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         private void DrawOpenTab (in Rect rect)
         {
-            if (currentTab == console.TabCount)
+            if (currentTab == DevelopmentConsole.TabCount)
                 return;
             
             var elementRect = rect;
 
-            var tab = console.GetTab (currentTab);
+            var tab = DevelopmentConsole.GetTab (currentTab);
             var elementCount = tab.ElementCount;
             
             for (var i = 0; i < elementCount; i++)
