@@ -9,10 +9,9 @@ namespace TwistedArk.DevelopmentConsole
     public class FancySliderFloat : GuiElement<float>
     {
         private float min;
-        private float max;
-            
+        private float max;     
+        
         private float snap;
-        private float value;
             
         public FancySliderFloat (string label, float min, float max, float snap, 
             Action<float> valueChanged, Func<float> updateValue) 
@@ -46,19 +45,17 @@ namespace TwistedArk.DevelopmentConsole
             
             lineRect.y += LineHeightPadded;
             DrawSlider (in lineRect, skin);
-            
-            CurrentValue = value;
         }
 
         private void DrawSlider (in Rect lineRect, ConsoleSkin skin)
         {
             var sliderRect = lineRect;
-
-            var newValue = GUI.HorizontalSlider (sliderRect, value, min, max,
+            
+            var newValue = GUI.HorizontalSlider (sliderRect, CurrentValue, min, max,
                 skin.GetOrCreateStyle ("Slider", GUI.skin.horizontalSlider),
                 skin.GetOrCreateStyle ("Slider Thumb", GUI.skin.horizontalSliderThumb));
 
-            value = math.clamp (math.round (newValue / snap) * snap, min, max);
+            CurrentValue = math.clamp (math.round (newValue / snap) * snap, min, max);
         }
 
         private void DrawButtons (in Rect lineRect, ConsoleSkin skin)
@@ -74,11 +71,11 @@ namespace TwistedArk.DevelopmentConsole
             
             if (GUI.Button (minusRect, "-", buttonStyle))
             {
-                value = math.clamp (value - snap, min, max);
+                CurrentValue = math.clamp (CurrentValue - snap, min, max);
             }
             if (GUI.Button (plusRect, "+", buttonStyle))
             {
-                value = math.clamp (value + snap, min, max);
+                CurrentValue = math.clamp (CurrentValue + snap, min, max);
             }
         }
 
