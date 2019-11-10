@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     public abstract class GuiElementBase : IDisposable
     {
@@ -33,16 +33,17 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
         }
 
-        protected Rect DrawPrefixLabel (in Rect rect)
+        protected Rect DrawPrefixLabel (in Rect rect, ConsoleSkin skin)
         {
             var labelRect = rect;
-            labelRect.width = math.clamp (rect.width / 3f, 100f, 300f);
+            labelRect.width = math.max (rect.width / 2.5f, 100f);
 
             var contentRect = rect;
             contentRect.x += labelRect.width;
             contentRect.width -= labelRect.width;
-
-            GUI.Label (labelRect, Label);
+            
+            var labelStyle = skin.GetOrCreateStyle ("Label Prefix", GUI.skin.label);
+            GUI.Label (labelRect, Label, labelStyle);
 
             return contentRect;
         }

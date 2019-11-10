@@ -1,35 +1,33 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole
 {
-    public class FancySliderFloat : GuiElement<float>
+    public class FancySliderInt : GuiElement<int>
     {
-        private float min;
-        private float max;
-            
-        private float snap;
-        private float value;
-            
-        public FancySliderFloat (string label, float min, float max, float snap, 
-            Action<float> valueChanged, Func<float> updateValue) 
+        private int min;
+        private int max;
+
+        private int snap;
+        private int value;
+
+        public FancySliderInt (string label, int min, int max, int snap,
+            Action<int> valueChanged, Func<int> updateValue)
             : base (label, valueChanged, updateValue)
         {
             this.min = min;
             this.max = max;
-            this.snap = snap < 0.01f ? 0.01f : snap;
+            this.snap = snap <= 0 ? 1 : snap;
         }
 
         public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
             var lineRect = rect;
             lineRect.height = LineHeight;
-            
+
             var labelRect = lineRect;
-            
+
             GUI.Label (labelRect, Label, skin.GetOrCreateStyle ("Label Centered", GUI.skin.label));
 
             var buttonRect = rect;
@@ -41,12 +39,12 @@ namespace TwistedArk.DevelopmentConsole
             lineRect.y += LineHeightPadded;
             lineRect.x += 150;
             lineRect.width -= 290;
-            
+
             DrawValue (in lineRect, skin);
-            
+
             lineRect.y += LineHeightPadded;
             DrawSlider (in lineRect, skin);
-            
+
             CurrentValue = value;
         }
 
@@ -58,24 +56,25 @@ namespace TwistedArk.DevelopmentConsole
                 skin.GetOrCreateStyle ("Slider", GUI.skin.horizontalSlider),
                 skin.GetOrCreateStyle ("Slider Thumb", GUI.skin.horizontalSliderThumb));
 
-            value = math.clamp (math.round (newValue / snap) * snap, min, max);
+            value = (int) math.clamp (math.round (newValue / snap) * snap, min, max);
         }
 
         private void DrawButtons (in Rect lineRect, ConsoleSkin skin)
         {
             var buttonStyle = skin.GetOrCreateStyle ("Button", GUI.skin.button);
-            
+
             var minusRect = lineRect;
             minusRect.width = 120;
-            
+
             var plusRect = lineRect;
             plusRect.x = lineRect.width - 100;
             plusRect.width = 120;
-            
+
             if (GUI.Button (minusRect, "-", buttonStyle))
             {
                 value = math.clamp (value - snap, min, max);
             }
+
             if (GUI.Button (plusRect, "+", buttonStyle))
             {
                 value = math.clamp (value + snap, min, max);
@@ -95,5 +94,4 @@ namespace TwistedArk.DevelopmentConsole
             return base.GetHeight () * 3f;
         }
     }
-
 }

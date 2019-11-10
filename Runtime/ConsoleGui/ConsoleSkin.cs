@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     [CreateAssetMenu (menuName = "Twisted Ark/Development Console/Skin")]
     public sealed class ConsoleSkin : ScriptableObject
@@ -43,6 +43,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         {
             Styles = new List<GUIStyle>
             {
+                new GUIStyle { name = "Box"},
                 new GUIStyle { name = "Label"},
                 new GUIStyle { name = "Slider"},
                 new GUIStyle { name = "Slider Thumb"},

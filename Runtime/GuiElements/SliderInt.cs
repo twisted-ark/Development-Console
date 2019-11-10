@@ -2,7 +2,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     public class SliderInt : GuiElement<int>
     {
@@ -25,10 +25,18 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
-            var contentRect = DrawPrefixLabel (rect);
-            var oldValue = CurrentValue;
+            var lineRect = rect;
+            lineRect.height = LineHeight;
             
-            var newValue = GUI.HorizontalSlider (contentRect, oldValue, min, max);
+            var contentRect = DrawPrefixLabel (lineRect, skin);
+            var oldValue = CurrentValue;
+
+            var sliderStyle = skin.GetOrCreateStyle ("Slider", GUI.skin.horizontalSlider);
+            var sliderThumb = skin.GetOrCreateStyle ("Slider Thumb", GUI.skin.horizontalSliderThumb);
+            
+            var newValue = GUI.HorizontalSlider (
+                contentRect, oldValue, min, max, sliderStyle, sliderThumb);
+            
             newValue = math.round (newValue);
 
             if ((int) newValue == oldValue) 

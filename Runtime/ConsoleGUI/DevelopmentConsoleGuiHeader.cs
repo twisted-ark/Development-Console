@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     public partial class DevelopmentConsoleGui
     {
@@ -13,7 +14,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 rect.y,
                 rect.height,
                 rect.height);
-            
+
             var tabRect = rect;
             tabRect.width -= closeRect.width + 10;
 
@@ -25,15 +26,16 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 DrawHeaderTab (in tabRect, skin, tab, i);
                 tabRect.x += tabRect.width;
             }
-            
-            GuiColors.PushGuiColor (Color.red);
-            
+
+            DrawCloseButton (in closeRect, skin);
+        }
+
+        private static void DrawCloseButton (in Rect closeRect, ConsoleSkin skin)
+        {
+            GuiColors.PushBackgroundColor (Color.red);
             if (GUI.Button (closeRect, "X", skin.GetOrCreateStyle ("Tab Closed", GUI.skin.button)))
-            {
                 DevelopmentConsole.IsActive = false;
-            }
-            
-            GuiColors.PopGuiColor ();
+            GuiColors.PopBackgroundColor ();
         }
 
         private void DrawHeaderTab (in Rect rect, ConsoleSkin skin, ConsoleTab tab, int index)
@@ -43,40 +45,79 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.HeaderColorActive);
 
                 GUI.Box (rect, tab.Name, skin.GetOrCreateStyle ("Tab Open", GUI.skin.box));
-                
+
                 GuiColors.PopBackgroundColor ();
                 return;
             }
-            
+
             GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.HeaderColor);
             if (GUI.Button (rect, tab.Name, skin.GetOrCreateStyle ("Tab Closed", GUI.skin.box)))
             {
                 currentTab = index;
+                offset = 0;
             }
+
             GuiColors.PopBackgroundColor ();
         }
+
+        private static float offset;
+        private static float contentHeight;
         
-        private void DrawOpenTab (in Rect rect, ConsoleSkin skin)
+        private static void DrawScrollbar (in Rect scrollRect, ConsoleSkin skin)
+        {
+            GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.ForegroundColor);
+
+            var bottomValue = math.max (0, contentHeight - scrollRect.height);
+            
+            offset = GUI.VerticalSlider (scrollRect, offset, 0, bottomValue,
+                skin.GetOrCreateStyle ("Scrollbar Vertical", GUI.skin.verticalScrollbar),
+                skin.GetOrCreateStyle ("Scrollbar Vertical Thumb", GUI.skin.verticalScrollbarThumb)
+            );
+            
+            //Debug.Log ($"{contentHeight} | {scrollRect.height}");
+            
+            GuiColors.PopBackgroundColor ();
+        }
+
+        private void DrawOpenTab (Rect rect, ConsoleSkin skin)
         {
             if (currentTab == DevelopmentConsole.TabCount)
                 return;
-            
-            var elementRect = rect;
 
+            float height = 0;
+            var r = rect;
+            r.width -= 30;
+            rect.width += 10;
+            GUI.Window (309, rect, _ => DrawContent (r, skin), GUIContent.none);
+        }
+
+        private void DrawContent (Rect rect, ConsoleSkin skin)
+        {
+            rect.y = 0;
+            var elementRect = rect;
+            
             var tab = DevelopmentConsole.GetTab (currentTab);
             var elementCount = tab.ElementCount;
+            
+            GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.ForegroundColor);
+            elementRect.y -= offset;
             
             for (var i = 0; i < elementCount; i++)
             {
                 var element = tab.GetGuiElement (i);
-                var height = element.GetHeight ();
-                
-                elementRect.height = height;
+                var elementHeight = element.GetHeight ();
+
+                elementRect.height = elementHeight;
+
                 element.OnPreDraw (in elementRect, skin);
                 element.OnDraw (in elementRect, skin);
-                elementRect.y += height;
+
+                elementRect.y += elementHeight + DevelopmentConsole.Instance.ElementPadding;
             }
+
+            contentHeight = elementRect.y + offset;
+
+            GuiColors.PopBackgroundColor ();
         }
     }
-
 }

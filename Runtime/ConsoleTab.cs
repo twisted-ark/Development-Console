@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
-    public sealed class ConsoleTab
+    public sealed class ConsoleTab : IGuiElementGroup
     {
         private Dictionary<string, GuiElementBase> namedElements = new Dictionary<string, GuiElementBase> ();
 
@@ -23,23 +23,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             return elements[index];
         }
 
-        public ConsoleTab Add (GuiElementBase element)
+        public void Add (GuiElementBase element)
         {
             elements.Add (element);
             namedElements.Add (element.Label, element);
-            return this;
-        }
-
-        public ConsoleTab AddRange (IEnumerable<GuiElementBase> elements)
-        {
-            this.elements.AddRange (elements);
-            
-            foreach (var element in elements)
-            {
-                namedElements.Add (element.Label, element);
-            }
-            
-            return this;
         }
 
         public void RemoveElement (GuiElementBase element)

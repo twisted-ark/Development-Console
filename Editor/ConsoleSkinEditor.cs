@@ -1,9 +1,8 @@
 ﻿using System;
-using TwistedArk.DevelopmentConsole.Runtime;
 using UnityEditor;
 using UnityEngine;
 
-namespace TwistedArk.Develpomentconsole.Editor
+namespace TwistedArk.DevelopmentConsole.Editor
 {
     [CustomEditor (typeof (ConsoleSkin))]
     public class ConsoleSkinEditor : UnityEditor.Editor

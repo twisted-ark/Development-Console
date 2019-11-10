@@ -4,7 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - ConsoleSkin: {fileID: 11400000, guid: 11e0c42e3539a854f9e13615036c4323, type: 2}
+  - UnityGuiSkin: {fileID: 11400000, guid: 11e0c42e3539a854f9e13615036c4323, type: 2}
+  - Skin: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

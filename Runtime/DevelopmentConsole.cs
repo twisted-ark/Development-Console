@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     public sealed class DevelopmentConsole : ScriptableObject
     {
@@ -32,14 +32,13 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         [FormerlySerializedAs ("ConsoleSkin")]
         [Header ("Skin")]
-        [SerializeField] internal GUISkin UnityGuiSkin;
         [SerializeField] internal ConsoleSkin Skin;
         
         [Header ("Controls")]
         [SerializeField] internal bool UseBuiltInGui = true;
         [SerializeField] internal KeyCode ToggleGuiKey = KeyCode.F2;
 
-        [Header ("Drawing")]
+        [Header ("Layout")]
         [SerializeField] internal Vector2 anchorsMin = Vector2.zero;
         [SerializeField] internal Vector2 anchorsMax = Vector2.one;
 
@@ -54,9 +53,12 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         [SerializeField] internal float LineHeight = 16;
         [SerializeField] internal float LinePadding = 2;
 
-        [Header ("Color")]
+        [SerializeField] internal float ElementPadding = 20;
+        
+        [Header ("Colors")]
         [SerializeField] internal Color BackgroundColor = new Color (.1f, .1f, .1f, .7f);
-
+        [SerializeField] internal Color ForegroundColor = new Color (0.7f, 0.7f, 0.7f, 0.7f);
+        
         [SerializeField] internal Color HeaderColorActive = new Color (.8f, .8f, .8f, 1f);
         [SerializeField] internal Color HeaderColor = new Color (.8f, .8f, .8f, .4f);
         

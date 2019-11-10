@@ -3,39 +3,18 @@ using UnityEngine;
 
 namespace TwistedArk.DevelopmentConsole.Runtime
 {
-    public class GuiGroup : GuiElementBase
+    public class GuiGroup : GuiElementBase, IGuiElementGroup
     {
         private List<GuiElementBase> elements;
 
-        public GuiGroup (string label, params GuiElementBase[] elements) : base (label)
+        public GuiGroup (string label) : base (label)
         {
-            this.elements = new List<GuiElementBase> (elements);
+            elements = new List<GuiElementBase> (elements);
         }
 
-        public static GuiGroup ConstructGroup (ConsoleTab tab, string label, params GuiElementBase[] elements)
+        public void Add (GuiElementBase element)
         {
-            var group = new GuiGroup (label, elements);
-            tab.Add (group);
-            return group;
-        }
-        
-        public static GuiGroup ConstructGroup (string tabName, string label, params GuiElementBase[] elements)
-        {
-            var tab = DevelopmentConsole.GetOrCreateTab (tabName);
-            return ConstructGroup (tab, label, elements);
-        }
-        
-        public static GuiGroup ConstructGroup (ConsoleTab tab, Component component, params GuiElementBase[] elements)
-        {
-            var label = $"{component.name}({component.GetInstanceID ().ToString ()})";
-            return ConstructGroup (tab, label, elements);
-        }
-        
-        public static GuiGroup ConstructGroup (string tabName, Component component, params GuiElementBase[] elements)
-        {
-            var tab = DevelopmentConsole.GetOrCreateTab (tabName);
-            var label = $"{component.name}({component.GetInstanceID ().ToString ()})";
-            return ConstructGroup (tab, label, elements);
+            elements.Add (element);
         }
 
         public override void OnDraw (in Rect rect, ConsoleSkin skin)

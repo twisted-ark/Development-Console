@@ -1,10 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     public class Toggle : GuiElement<bool>
     {
+        private readonly GUIContent onContent = new GUIContent ("On");
+        private readonly GUIContent offContent = new GUIContent ("Off");
+        
         public Toggle (string label, Action<bool> valueChanged, Func<bool> updateValue)
             : base (label, valueChanged, updateValue)
         {
@@ -17,8 +20,10 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
-            var contentRect = DrawPrefixLabel (rect);
-            CurrentValue = GUI.Toggle (contentRect, CurrentValue, GUIContent.none, skin.GetOrCreateStyle ("Toggle", GUI.skin.toggle));
+            var contentRect = DrawPrefixLabel (rect, skin);
+            CurrentValue = GUI.Toggle (
+                contentRect, CurrentValue, CurrentValue ? onContent : offContent, 
+                skin.GetOrCreateStyle ("Toggle", GUI.skin.toggle));
         }
     }
 }

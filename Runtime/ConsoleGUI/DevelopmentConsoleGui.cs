@@ -1,7 +1,7 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     [AddComponentMenu (null)]
     public partial class DevelopmentConsoleGui : MonoBehaviour
@@ -21,6 +21,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             if (!DevelopmentConsole.IsActive)
                 return;
             
+            GuiColors.PushGuiColor (DevelopmentConsole.Instance.ForegroundColor);
             GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.BackgroundColor);
 
             var screenWidth = Screen.width;
@@ -54,20 +55,25 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             var contentRect = new Rect (
                 startLeft + paddingX.x, 
                 startUp + contentOffset + paddingY.y, 
-                panelWidth - totalPaddingX, 
+                panelWidth - totalPaddingX - 120, 
                 panelHeight - contentOffset - totalPaddingY);
 
+            var scrollbarRect = contentRect;
+            scrollbarRect.x = contentRect.width + 50;
+            scrollbarRect.width = panelWidth - totalPaddingX - contentRect.width - 30;
 
             var skin = DevelopmentConsole.Instance.Skin;
-            var unitySkin = DevelopmentConsole.Instance.UnityGuiSkin;
             
-            GUI.Box (fullRect, GUIContent.none, skin.GetOrCreateStyle ("Box", unitySkin.box));
+            GUI.Box (fullRect, GUIContent.none, skin.GetOrCreateStyle ("Box", GUI.skin.box));
             
             currentTab = math.min (currentTab, DevelopmentConsole.TabCount);
 
             DrawHeader (in headerRect, skin);
-            DrawOpenTab (in contentRect, skin);
+            
+            DrawOpenTab (contentRect, skin);
+            DrawScrollbar (in scrollbarRect, skin);
 
+            GuiColors.PopGuiColor ();
             GuiColors.PopBackgroundColor ();
             
             if (Event.current.type != EventType.Repaint && Event.current.type != EventType.Layout)

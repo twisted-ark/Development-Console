@@ -36,7 +36,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
         public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
             var lineRect = new Rect (rect.x, rect.y, rect.width, LineHeightPadded);
-            var contentRect = DrawPrefixLabel (lineRect);
+            var contentRect = DrawPrefixLabel (lineRect, skin);
             
             GuiColors.PushGuiColor (CurrentValue);
             // max: #FFFFFF(FF)

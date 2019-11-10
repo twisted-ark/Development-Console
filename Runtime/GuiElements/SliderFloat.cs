@@ -2,7 +2,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.DevelopmentConsole
 {
     public class SliderFloat : GuiElement<float>
     {
@@ -30,7 +30,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
-            var contentRect = DrawPrefixLabel (rect);
+            var contentRect = DrawPrefixLabel (rect, skin);
             var displayValue = Mathf.Round (value / snap) * snap;
             
             value = GUI.HorizontalSlider (contentRect, displayValue, min, max);
