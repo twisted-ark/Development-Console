@@ -24,6 +24,12 @@ namespace TwistedArk.DevelopmentConsole
             var toggle = new Toggle (label, valueChanged, updateValue);
             group.Add (toggle);
         }
+
+        public static void CreateButton (this IGuiElementGroup group, string label, Action pressed)
+        {
+            var button = new Button (label, pressed);
+            group.Add (button);
+        }
     }
 
 }
