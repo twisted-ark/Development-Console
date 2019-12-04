@@ -17,7 +17,7 @@ namespace TwistedArk.DevelopmentConsole
         {
             if (GUI.Button (rect, Label, skin.GetOrCreateStyle ("Button", GUI.skin.toggle)))
             {
-                Debug.Log ("Buttoned");
+                Pressed?.Invoke ();
             }
         }
     }
