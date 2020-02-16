@@ -13,6 +13,11 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             DevelopmentConsole.VisibilityChanged += OnDevConsoleVisibilityChanged;
         }
 
+        private void OnDestroy ()
+        {
+            DevelopmentConsole.VisibilityChanged -= OnDevConsoleVisibilityChanged;
+        }
+
         public void ShowConsole ()
         {
             DevelopmentConsole.IsActive = true;
