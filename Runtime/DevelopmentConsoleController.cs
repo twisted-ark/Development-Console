@@ -25,7 +25,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
 
         private void OnDevConsoleVisibilityChanged (bool status)
         {
-            if (enabled == false)
+            if (!this || enabled == false)
                 return;
 
             if (status)
