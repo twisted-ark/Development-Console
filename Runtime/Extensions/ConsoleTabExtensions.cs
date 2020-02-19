@@ -1,4 +1,5 @@
 ﻿using System;
+using TwistedArk.DevelopmentConsole.Runtime;
 
 namespace TwistedArk.DevelopmentConsole
 {
@@ -29,6 +30,14 @@ namespace TwistedArk.DevelopmentConsole
         {
             var button = new Button (label, pressed);
             group.Add (button);
+        }
+
+        public static IGuiElementGroup CreateGroup (this IGuiElementGroup group, string label)
+        {
+            var elementGroup = new GuiGroup (label);
+            group.Add (elementGroup);
+            
+            return elementGroup;
         }
     }
 

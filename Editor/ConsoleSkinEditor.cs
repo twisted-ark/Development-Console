@@ -7,12 +7,14 @@ namespace TwistedArk.DevelopmentConsole.Editor
     [CustomEditor (typeof (ConsoleSkin))]
     public class ConsoleSkinEditor : UnityEditor.Editor
     {
+        private SerializedProperty backgroundTextureProp;
         private SerializedProperty stylesProp;
         private float fontScaleFactor = 0.2f;
 
         private void OnEnable ()
         {
             stylesProp = serializedObject.FindProperty ("Styles");
+            backgroundTextureProp = serializedObject.FindProperty ("background");
             SortStyles ();
         }
 
@@ -36,6 +38,11 @@ namespace TwistedArk.DevelopmentConsole.Editor
                 }
             }
             EditorGUILayout.Space ();
+
+            EditorGUILayout.LabelField ("Textures", EditorStyles.whiteLargeLabel);
+            {
+                EditorGUILayout.PropertyField (backgroundTextureProp);
+            }
             
             EditorGUILayout.LabelField ("Styles", EditorStyles.whiteLargeLabel);
             {

@@ -6,10 +6,12 @@ namespace TwistedArk.DevelopmentConsole
     [CreateAssetMenu (menuName = "Twisted Ark/Development Console/Skin")]
     public sealed class ConsoleSkin : ScriptableObject
     {
-        [Header ("Styles")] 
+        [SerializeField] private Texture background;
         [SerializeField] internal List<GUIStyle> Styles;
 
         private Dictionary<string, GUIStyle> styleMap;
+
+        public Texture Background => background;
 
         public GUIStyle GetOrCreateStyle (string styleName, GUIStyle template)
         {

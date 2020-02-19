@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f5e9cb25633094d81f47d3c079333f, type: 3}
   m_Name: ConsoleSkin-Mobile
   m_EditorClassIdentifier: 
+  background: {fileID: 2800000, guid: a4d649fea915c3d4693f90f955a59ac3, type: 3}
   Styles:
   - m_Name: Box
     m_Normal:
