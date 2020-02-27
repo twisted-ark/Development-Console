@@ -17,19 +17,23 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             elements.Add (element);
         }
 
-        public bool TryGetElementWithName (string name, out GuiElementBase guiElement)
+        public void Remove (GuiElementBase element)
         {
-            foreach (var element in elements)
-            {
-                if (string.CompareOrdinal (name, element.Label) == 0)
-                {
-                    guiElement = element;
-                    return true;
-                }
-            }
+            elements.Remove (element);
+        }
 
-            guiElement = default;
-            return false;
+        public void Remove (string elementName)
+        {
+            if (TryGetNamedElement (elementName, out GuiElementBase elementBase))
+                elements.Remove (elementBase);
+        }
+
+        public bool TryGetNamedElement<T> (string elementName, out T elementBase) where T : GuiElementBase
+        {
+            elementBase = elements.Find (
+                element => string.CompareOrdinal (element.Label, elementName) == 0) as T;
+
+            return elementBase != null;
         }
 
         public override void OnDraw (in Rect rect, ConsoleSkin skin)

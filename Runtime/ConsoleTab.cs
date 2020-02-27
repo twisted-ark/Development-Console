@@ -29,12 +29,21 @@ namespace TwistedArk.DevelopmentConsole
             namedElements.Add (element.Label, element);
         }
 
-        public void RemoveElement (GuiElementBase element)
+        public void Remove (GuiElementBase elementBase)
         {
-            namedElements.Remove (element.Label);
-            elements.Remove (element);
+            elements.Remove (elementBase);
+            namedElements.Remove (elementBase.Label);
         }
         
+        public void Remove (string elementName)
+        {
+            if (TryGetNamedElement (elementName, out GuiElementBase elementBase))
+            {
+                elements.Remove (elementBase);
+                namedElements.Remove (elementBase.Label);
+            }
+        }
+
         public bool TryGetNamedElement<T> (string name, out T element) where T : GuiElementBase
         {
             element = null;
