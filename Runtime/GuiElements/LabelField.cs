@@ -17,9 +17,9 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             GUI.Label (labelRect, Label, skin.GetOrCreateStyle ("Label", GUI.skin.label));
         }
 
-        public override float GetHeight ()
+        public override float GetContentHeight ()
         {
-            return base.GetHeight () * 2f;
+            return base.GetContentHeight () * 2f;
         }
     }
 

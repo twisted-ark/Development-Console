@@ -15,7 +15,10 @@ namespace TwistedArk.DevelopmentConsole
 
         public override void OnDraw (in Rect rect, ConsoleSkin skin)
         {
-            if (GUI.Button (rect, Label, skin.GetOrCreateStyle ("Button", GUI.skin.toggle)))
+            var lineRect = rect;
+            lineRect.height = LineHeight;
+            
+            if (GUI.Button (lineRect, Label, skin.GetOrCreateStyle ("Button", GUI.skin.toggle)))
             {
                 Pressed?.Invoke ();
             }

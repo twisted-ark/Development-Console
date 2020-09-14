@@ -87,9 +87,9 @@ namespace TwistedArk.DevelopmentConsole
                 skin.GetOrCreateStyle ("Text Centered", GUI.skin.textField));
         }
 
-        public override float GetHeight ()
+        public override float GetContentHeight ()
         {
-            return base.GetHeight () * 3f;
+            return base.GetContentHeight () * 3f;
         }
     }
 

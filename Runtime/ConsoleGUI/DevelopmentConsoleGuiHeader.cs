@@ -105,7 +105,7 @@ namespace TwistedArk.DevelopmentConsole
             for (var i = 0; i < elementCount; i++)
             {
                 var element = tab.GetGuiElement (i);
-                var elementHeight = element.GetHeight ();
+                var elementHeight = element.GetContentHeight ();
 
                 elementRect.height = elementHeight;
 

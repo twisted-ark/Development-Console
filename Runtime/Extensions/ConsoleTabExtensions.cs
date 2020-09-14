@@ -32,6 +32,12 @@ namespace TwistedArk.DevelopmentConsole
             group.Add (button);
         }
 
+        public static void CreateLabel (this IGuiElementGroup group, string label)
+        {
+            var l = new LabelField (label);
+            group.Add (l);
+        }
+        
         public static IGuiElementGroup CreateGroup (this IGuiElementGroup group, string label)
         {
             var elementGroup = new GuiGroup (label);

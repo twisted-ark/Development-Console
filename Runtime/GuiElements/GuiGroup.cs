@@ -55,7 +55,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             
             foreach (var element in elements)
             {
-                var height = element.GetHeight ();
+                var height = element.GetContentHeight ();
                 elementRect.height = height;
                 
                 element.OnPreDraw (elementRect, skin);
@@ -64,13 +64,14 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             }
         }
         
-        public override float GetHeight ()
+        public override float GetContentHeight ()
         {
-            var height = LineHeightPadded + LinePadding;
+            var height = LineHeightPadded;
             foreach (var element in elements)
             {
-                height += element.GetHeight ();
+                height += element.GetElementHeight ();
             }
+            
             return height;
         }
 

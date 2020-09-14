@@ -27,7 +27,9 @@ namespace TwistedArk.DevelopmentConsole
 
         public virtual void OnDraw (in Rect rect, ConsoleSkin skin) { }
 
-        public virtual float GetHeight () => LineHeightPadded;
+        public virtual float GetContentHeight () => LineHeightPadded;
+
+        public float GetElementHeight () => LineHeight + DevelopmentConsole.Instance.ElementPadding;
 
         public virtual void Dispose ()
         {

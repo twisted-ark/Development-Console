@@ -81,7 +81,7 @@ namespace TwistedArk.DevelopmentConsole.Runtime
             }
         }
         
-        public override float GetHeight ()
+        public override float GetContentHeight ()
         {
             return showSliders ? LineHeightPadded * (useAlpha ? 5 : 4) : LineHeightPadded;
         }
