@@ -8,7 +8,7 @@ namespace TwistedArk.DevelopmentConsole
     {
         internal DevelopmentConsole console;
         
-        private int currentTab;
+        private int currentTabIndex;
         
         private void Update ()
         {
@@ -78,7 +78,7 @@ namespace TwistedArk.DevelopmentConsole
             
             GUI.Box (fullRect, GUIContent.none, skin.GetOrCreateStyle ("Box", GUI.skin.box));
             
-            currentTab = math.min (currentTab, DevelopmentConsole.TabCount);
+            currentTabIndex = math.min (currentTabIndex, DevelopmentConsole.TabCount);
 
             DrawHeader (in headerRect, skin);
             

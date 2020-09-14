@@ -60,16 +60,19 @@ namespace TwistedArk.DevelopmentConsole.Runtime
                 
                 element.OnPreDraw (elementRect, skin);
                 element.OnDraw (elementRect, skin);
-                elementRect.y += height;
+                
+                elementRect.y += height + DevelopmentConsole.Instance.ElementPadding;
             }
         }
         
         public override float GetContentHeight ()
         {
             var height = LineHeightPadded;
+            
             foreach (var element in elements)
             {
-                height += element.GetElementHeight ();
+                height += element.GetContentHeight ();
+                height += DevelopmentConsole.Instance.ElementPadding;
             }
             
             return height;

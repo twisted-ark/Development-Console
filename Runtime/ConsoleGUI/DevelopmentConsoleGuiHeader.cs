@@ -40,7 +40,7 @@ namespace TwistedArk.DevelopmentConsole
 
         private void DrawHeaderTab (in Rect rect, ConsoleSkin skin, ConsoleTab tab, int index)
         {
-            if (index == currentTab)
+            if (index == currentTabIndex)
             {
                 GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.HeaderColorActive);
 
@@ -53,7 +53,7 @@ namespace TwistedArk.DevelopmentConsole
             GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.HeaderColor);
             if (GUI.Button (rect, tab.Name, skin.GetOrCreateStyle ("Tab Closed", GUI.skin.box)))
             {
-                currentTab = index;
+                currentTabIndex = index;
                 offset = 0;
             }
 
@@ -81,7 +81,7 @@ namespace TwistedArk.DevelopmentConsole
 
         private void DrawOpenTab (Rect rect, ConsoleSkin skin)
         {
-            if (currentTab == DevelopmentConsole.TabCount)
+            if (currentTabIndex == DevelopmentConsole.TabCount)
                 return;
 
             float height = 0;
@@ -96,7 +96,7 @@ namespace TwistedArk.DevelopmentConsole
             rect.y = 0;
             var elementRect = rect;
             
-            var tab = DevelopmentConsole.GetTab (currentTab);
+            var tab = DevelopmentConsole.GetTab (currentTabIndex);
             var elementCount = tab.ElementCount;
             
             GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.ForegroundColor);
