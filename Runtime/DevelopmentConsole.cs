@@ -30,6 +30,8 @@ namespace TwistedArk.DevelopmentConsole
 
         #endregion
 
+        [SerializeField] internal Vector2Int ReferenceResolution = new Vector2Int (1080, 1920);
+        
         [FormerlySerializedAs ("ConsoleSkin")]
         [Header ("Skin")]
         [SerializeField] internal ConsoleSkin Skin;

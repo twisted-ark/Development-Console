@@ -20,13 +20,22 @@ namespace TwistedArk.DevelopmentConsole
         {
             if (!DevelopmentConsole.IsActive)
                 return;
+
+            var screenWidth = Screen.width;
+            var screenHeight = Screen.height;
+            var reference = DevelopmentConsole.Instance.ReferenceResolution;
+            
+            var oldMatrix = GUI.matrix;
+            var scaler = new Vector3 (
+                (float) screenWidth / reference.x, 
+                (float) screenHeight / reference.y, 
+                1);
+            
+            GUI.matrix = Matrix4x4.Scale (scaler);
             
             GuiColors.PushGuiColor (DevelopmentConsole.Instance.ForegroundColor);
             GuiColors.PushBackgroundColor (DevelopmentConsole.Instance.BackgroundColor);
 
-            var screenWidth = Screen.width;
-            var screenHeight = Screen.height;
-            
             var headerHeight = DevelopmentConsole.Instance.HeaderHeight;
             var anchorsMin = DevelopmentConsole.Instance.anchorsMin;
             var anchorsMax = DevelopmentConsole.Instance.anchorsMax;
@@ -41,7 +50,10 @@ namespace TwistedArk.DevelopmentConsole
             var startUp = screenHeight * anchorsMin.y;
 
             var panelWidth = screenWidth * anchorsMax.x - startLeft;
+            panelWidth /= scaler.x;
+            
             var panelHeight = screenHeight * anchorsMax.y - startUp;
+            panelHeight /= scaler.y;
             
             var fullRect = new Rect (startLeft, startUp, 
                 panelWidth, panelHeight);
@@ -78,6 +90,8 @@ namespace TwistedArk.DevelopmentConsole
             
             if (Event.current.type != EventType.Repaint && Event.current.type != EventType.Layout)
                 Event.current.Use ();
+
+            GUI.matrix = oldMatrix;
         }
 
     }
