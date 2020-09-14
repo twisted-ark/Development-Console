@@ -20,6 +20,7 @@ namespace TwistedArk.DevelopmentConsole
             
             if (GUI.Button (lineRect, Label, skin.GetOrCreateStyle ("Button", GUI.skin.toggle)))
             {
+                Handheld.Vibrate ();
                 Pressed?.Invoke ();
             }
         }
