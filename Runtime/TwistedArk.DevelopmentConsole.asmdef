@@ -1,9 +1,8 @@
 {
-    "name": "TwistedArk.DevelopmentConsole.Runtime",
+    "name": "TwistedArk.DevelopmentConsole",
     "references": [
         "GUID:d8b63aba1907145bea998dd612889d6b"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -11,5 +10,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [],
+    "noEngineReferences": false
 }
