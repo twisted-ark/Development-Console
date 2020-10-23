@@ -1,7 +1,7 @@
 {
   "name": "com.twistedark.development-console",
-  "version": "0.0.0",
-  "displayName": "Development Console",
+  "version": "0.1.0",
+  "displayName": "TA Development Console",
   "description": "A runtime development options system.",
   "unity": "2019.1",
   "unityRelease": "0b5",
@@ -10,7 +10,7 @@
  "keywords": [
   ],
   "author": {
-    "name": "Bernhard Miettinen",
+    "name": "Twisted Ark",
     "email": "info@twistedark.com",
     "url": "https://www.github.com/TwistedArk"
   } 
