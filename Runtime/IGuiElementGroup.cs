@@ -1,4 +1,4 @@
-﻿namespace TwistedArk.DevelopmentConsole
+﻿namespace TwistedArk.Development.Console
 {
     public interface IGuiElementGroup
     {

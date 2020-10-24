@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole
+namespace TwistedArk.Development.Console
 {
     public class Button : GuiElementBase
     {

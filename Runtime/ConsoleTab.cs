@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TwistedArk.DevelopmentConsole
+namespace TwistedArk.Development.Console
 {
     public sealed class ConsoleTab : IGuiElementGroup
     {

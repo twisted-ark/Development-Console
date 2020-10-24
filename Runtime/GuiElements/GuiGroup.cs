@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.Development.Console.Runtime
 {
     public class GuiGroup : GuiElementBase, IGuiElementGroup
     {       

@@ -1,7 +1,7 @@
 ﻿using System;
-using TwistedArk.DevelopmentConsole.Runtime;
+using TwistedArk.Development.Console.Runtime;
 
-namespace TwistedArk.DevelopmentConsole
+namespace TwistedArk.Development.Console
 {
     public static class GuiElementGroupExtensions
     {
@@ -44,6 +44,13 @@ namespace TwistedArk.DevelopmentConsole
             group.Add (elementGroup);
             
             return elementGroup;
+        }
+
+        public static IGuiElementGroup GetOrCreateGroup (this IGuiElementGroup group, string label)
+        {
+            if (group.TryGetNamedElement<GuiGroup> (label, out var elementGroup))
+                return elementGroup;
+            return group.CreateGroup (label);
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.Development.Console.Runtime
 {
     public class ColorField : GuiElement<Color>
     {

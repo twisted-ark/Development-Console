@@ -1,0 +1,15 @@
+{
+    "name": "TwistedArk.DevelopmentConsole.DefaultSettings",
+    "references": [
+        "GUID:efa3e976da2fe0e489cf724a87e5b592"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

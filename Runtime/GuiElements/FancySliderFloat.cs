@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole
+namespace TwistedArk.Development.Console
 {
     public class FancySliderFloat : GuiElement<float>
     {

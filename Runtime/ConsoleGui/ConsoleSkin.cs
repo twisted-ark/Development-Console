@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole
+namespace TwistedArk.Development.Console
 {
     [CreateAssetMenu (menuName = "Twisted Ark/Development Console/Skin")]
     public sealed class ConsoleSkin : ScriptableObject

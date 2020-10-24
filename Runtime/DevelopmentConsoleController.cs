@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.Development.Console.Runtime
 {
     public sealed class DevelopmentConsoleController : MonoBehaviour
     {

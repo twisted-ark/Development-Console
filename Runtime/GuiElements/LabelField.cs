@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Runtime
+namespace TwistedArk.Development.Console.Runtime
 {
     public class LabelField : GuiElementBase
     {

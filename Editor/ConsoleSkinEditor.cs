@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole.Editor
+namespace TwistedArk.Development.Console.Editor
 {
     [CustomEditor (typeof (ConsoleSkin))]
     public class ConsoleSkinEditor : UnityEditor.Editor

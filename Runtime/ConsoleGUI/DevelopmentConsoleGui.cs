@@ -1,7 +1,7 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
 
-namespace TwistedArk.DevelopmentConsole
+namespace TwistedArk.Development.Console
 {
     [AddComponentMenu (null)]
     public partial class DevelopmentConsoleGui : MonoBehaviour
