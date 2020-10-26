@@ -32,6 +32,12 @@ namespace TwistedArk.Development.Console
             group.Add (button);
         }
 
+        public static void CreateDropDown (this IGuiElementGroup group, string label, string[] options)
+        {
+            var dropDown = new DropDown (label, options);
+            group.Add (dropDown);
+        }
+        
         public static void CreateLabel (this IGuiElementGroup group, string label)
         {
             var l = new LabelField (label);
